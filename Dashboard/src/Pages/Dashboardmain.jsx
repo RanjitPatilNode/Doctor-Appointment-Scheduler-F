@@ -1,25 +1,26 @@
 import { useGetDashboardStatsQuery } from "../Api/dashboardApi";
 import { FaUserMd, FaUserInjured, FaCalendarCheck } from "react-icons/fa";
+import { ClipLoader } from "react-spinners";
 
 const Dashboard = () => {
     const { data, error, isLoading } = useGetDashboardStatsQuery();
-    const stats = data?.data; 
+    const stats = data?.data;
 
     return (
         <div className="p-4">
             <div className="bg-gray-200 p-4 rounded-md shadow-md">
-            
+
                 <h3 className="text-3xl font-bold text-blue-500 mb-6">Welcome to the Admin Dashboard!</h3>
 
 
-                
-                {isLoading && <p className="text-blue-500">Loading stats...</p>}
+
+                {isLoading && <ClipLoader color="#3b82f6" size={35} />}
                 {error && <p className="text-red-500">Failed to load stats!</p>}
 
-                
+
                 {stats && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                       
+
                         <div className="bg-white shadow-md rounded-xl p-6 flex items-center space-x-4">
                             <div className="bg-blue-100 p-3 rounded-lg">
                                 <FaCalendarCheck className="text-blue-500 text-4xl" />
@@ -33,7 +34,7 @@ const Dashboard = () => {
 
 
 
-                      
+
                         <div className="bg-white shadow-md rounded-xl p-6 flex items-center space-x-4">
                             <div className="bg-green-100 p-3 rounded-lg">
                                 <FaUserMd className="text-green-500 text-4xl" />
@@ -60,7 +61,7 @@ const Dashboard = () => {
                     </div>
                 )}
 
-               
+
                 <div className="mt-6 p-4 bg-white rounded-md shadow-md">
                     <h3 className="text-xl font-bold text-gray-800 mb-2">Dashboard Overview</h3>
                     <ul className="list-disc list-inside text-gray-700">

@@ -19,7 +19,9 @@ import Login from "./Pages/Login";
 
 const App = () => {
     const navigate = useNavigate();
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        return localStorage.getItem("token") ? true : false;
+    });
 
     useEffect(() => {
         checkAuthStatus();
@@ -27,7 +29,9 @@ const App = () => {
 
     const checkAuthStatus = () => {
         const token = localStorage.getItem("token");
-        setIsAuthenticated(!!token);
+        if (token) {
+            setIsAuthenticated(true);
+        }
     };
 
     return (
@@ -35,29 +39,20 @@ const App = () => {
             <ToastContainer position="top-right" autoClose={2000} />
 
             <Routes>
-             
-                <Route path="/" element={isAuthenticated ? <Navigate to="/homepage" replace /> : <Navigate to="/login" replace />} />
-
-              
+                <Route path="/" element={isAuthenticated ? <Navigate to="/homepage" replace /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
                 <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-
-               
                 <Route path="/*" element={isAuthenticated ? <AuthenticatedLayout /> : <Navigate to="/login" replace />} />
             </Routes>
         </div>
     );
 };
 
-
 const AuthenticatedLayout = () => {
     return (
         <div className="flex w-full">
-            
             <div className="w-64">
                 <SidebarMenu />
             </div>
-
-            
             <div className="flex-1 p-4 overflow-auto w-[calc(100%-16rem)]">
                 <Routes>
                     <Route path="/homepage" element={<Homepage />} />

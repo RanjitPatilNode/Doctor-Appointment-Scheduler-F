@@ -21,6 +21,7 @@ const Login = ({ setIsAuthenticated }) => {
             const response = await loginAdmin({ email, password }).unwrap();
             localStorage.setItem("token", response.token);
             setIsAuthenticated(true);
+            navigate("/homepage");
 
             setMessage("✅ Login successful! ");
             setIsSuccess(true);
